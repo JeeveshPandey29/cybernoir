@@ -1,0 +1,419 @@
+﻿@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/**
+ * CyberNoir â€” dark, premium cyber-themed design system.
+ * Accent: electric cyan / neon blue.
+ */
+:root {
+  color-scheme: dark;
+
+  --background: #0a0a0f;
+  --surface: #12121a;
+  --surface-raised: #1a1a26;
+  --border: #2a2a3a;
+  --border-hover: #3a3a50;
+  --foreground: #eeeef0;
+  --muted: #8888a0;
+  --muted-foreground: #5a5a70;
+  --accent: #00d4ff;
+  --accent-dim: #0099bb;
+  --accent-glow: rgba(0, 212, 255, 0.12);
+  --danger: #ff4466;
+  --success: #22cc88;
+  --warning: #ffaa22;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --background: #f5f7fb;
+  --surface: #ffffff;
+  --surface-raised: #eef2f8;
+  --border: #d8dde8;
+  --border-hover: #bcc7d8;
+  --foreground: #101826;
+  --muted: #526074;
+  --muted-foreground: #77839a;
+  --accent: #0a84ff;
+  --accent-dim: #005fd1;
+  --accent-glow: rgba(10, 132, 255, 0.12);
+  --danger: #d83b52;
+  --success: #1a9c67;
+  --warning: #d88a13;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-accent-glow: var(--accent-glow);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* â”€â”€â”€ Animated gradient background for hero â”€â”€â”€ */
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, var(--accent-glow), transparent),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(100, 0, 255, 0.06), transparent),
+              radial-gradient(ellipse 50% 50% at 20% 80%, rgba(0, 212, 255, 0.04), transparent);
+}
+
+/* â”€â”€â”€ Glow button â”€â”€â”€ */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+  color: var(--background);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  font-weight: 500;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1.5rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* â”€â”€â”€ Glass card â”€â”€â”€ */
+.glass-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  transition: all 0.25s ease;
+}
+.glass-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* â”€â”€â”€ Stat card glow â”€â”€â”€ */
+.stat-glow {
+  position: relative;
+}
+.stat-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--accent-glow), transparent, var(--accent-glow));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat-glow:hover::before {
+  opacity: 1;
+}
+
+/* â”€â”€â”€ Input styles â”€â”€â”€ */
+.input-field {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+  outline: none;
+  width: 100%;
+}
+.input-field::placeholder {
+  color: var(--muted-foreground);
+}
+.input-field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+/* â”€â”€â”€ Badge â”€â”€â”€ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  background: var(--surface);
+}
+.badge-accent {
+  border-color: var(--accent-dim);
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* â”€â”€â”€ Pulse animation â”€â”€â”€ */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes feedback-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes reaction-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(0, 212, 255, 0);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 26px rgba(0, 212, 255, 0.16);
+    transform: scale(1.015);
+  }
+}
+
+.animate-feedback-pop {
+  animation: feedback-pop 220ms ease-out;
+}
+
+.animate-reaction-pulse {
+  animation: reaction-pulse 420ms ease-out;
+}
+
+@keyframes toast-progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.animate-toast-progress {
+  animation-name: toast-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes share-border-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.share-action {
+  --share-accent: var(--accent);
+  --share-glow: var(--accent-glow);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(120deg, transparent, transparent, color-mix(in srgb, var(--share-accent) 58%, transparent), transparent, transparent) border-box;
+  background-size: 100% 100%, 220% 220%;
+  color: var(--muted);
+  transition:
+    color 180ms ease,
+    transform 180ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.share-action::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, var(--share-glow), transparent);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.share-action:hover,
+.share-action:focus-visible,
+.share-action--active {
+  border-color: transparent;
+  color: var(--foreground);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 0 0 1px color-mix(in srgb, var(--share-accent) 45%, transparent);
+  animation: share-border-pan 1.6s linear infinite;
+}
+
+.share-action:hover::before,
+.share-action:focus-visible::before,
+.share-action--active::before {
+  opacity: 1;
+}
+
+.share-action:focus-visible {
+  outline: none;
+}
+
+.share-action__label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  padding: 0.625rem 0.75rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.share-action--whatsapp {
+  --share-accent: #25d366;
+  --share-glow: color-mix(in srgb, #25d366 18%, transparent);
+}
+
+.share-action--linkedin {
+  --share-accent: #0a66c2;
+  --share-glow: color-mix(in srgb, #0a66c2 18%, transparent);
+}
+
+.share-action--copy {
+  --share-accent: #ffffff;
+  --share-glow: rgba(255, 255, 255, 0.14);
+}
+
+:root[data-theme="light"] .share-action--copy {
+  --share-accent: #111111;
+  --share-glow: rgba(17, 17, 17, 0.08);
+}
+
+.share-action--x {
+  --share-accent: #0f0f12;
+  --share-glow: rgba(15, 15, 18, 0.18);
+}
+
+:root:not([data-theme="light"]) .share-action--x {
+  --share-accent: #f5f7fb;
+  --share-glow: rgba(245, 247, 251, 0.1);
+}
+
+/* â”€â”€â”€ MDX prose styling â”€â”€â”€ */
+.mdx-content :where(h2, h3, h4) {
+  color: var(--foreground);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 7rem;
+}
+
+.mdx-content h2 {
+  margin-top: 2.75rem;
+  margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 1.25rem + 0.6vw, 2rem);
+  line-height: 1.2;
+}
+
+.mdx-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+  font-size: clamp(1.15rem, 1.05rem + 0.3vw, 1.35rem);
+  line-height: 1.35;
+}
+
+.mdx-content p {
+  margin-block: 1.2rem;
+  color: color-mix(in srgb, var(--foreground) 88%, var(--muted));
+  line-height: 1.95;
+}
+
+.mdx-content ul,
+.mdx-content ol {
+  margin-block: 1.2rem;
+  padding-left: 1.4rem;
+}
+
+.mdx-content li {
+  margin-block: 0.45rem;
+  line-height: 1.8;
+}
+
+.mdx-content strong {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.mdx-content blockquote {
+  margin-block: 1.5rem;
+  border-left: 3px solid var(--accent);
+  padding: 0.25rem 0 0.25rem 1rem;
+  color: color-mix(in srgb, var(--foreground) 75%, var(--muted));
+}
+
+.mdx-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.mdx-content a:hover {
+  color: var(--foreground);
+}
+.mdx-content code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+}
+.mdx-content pre {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+
+/* â”€â”€â”€ Avatar â”€â”€â”€ */
+.avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 2px solid var(--border);
+  object-fit: cover;
+}
+.avatar-lg {
+  width: 4rem;
+  height: 4rem;
+}
+
