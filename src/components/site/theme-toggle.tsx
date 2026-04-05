@@ -22,7 +22,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-2.5 py-2 font-mono text-[11px] text-muted transition-all hover:border-border-hover hover:text-foreground hover:shadow-[0_0_0_1px_rgba(0,212,255,0.08)] sm:px-3 sm:text-xs"
+      className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-surface px-2 py-2 font-mono text-[11px] text-muted transition-all hover:border-border-hover hover:text-foreground hover:shadow-[0_0_0_1px_rgba(0,212,255,0.08)] sm:px-3 sm:text-xs"
       aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
     >

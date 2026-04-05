@@ -22,11 +22,11 @@ export async function SiteHeader() {
       <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-3">
           <div className="flex min-w-0 items-center gap-2 sm:gap-6">
-          <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-90">
-            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-accent/20 bg-accent/10">
+          <Link href="/" className="flex min-w-0 items-center gap-2 transition-opacity hover:opacity-90 sm:gap-3">
+            <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-accent/20 bg-accent/10">
               <Image src="/images/logo.jpg" alt="CYBERNOIR logo" fill unoptimized className="object-cover" />
             </span>
-            <span className="text-base font-bold tracking-tight sm:text-xl">
+            <span className="truncate text-[1.05rem] font-bold tracking-tight sm:text-xl">
               <span className="text-foreground">CYBER</span>
               <span className="text-accent">NOIR</span>
             </span>

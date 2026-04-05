@@ -47,13 +47,52 @@ export function AuthControls({ user }: AuthControlsProps) {
 
   if (!user) {
     return (
-      <div className="flex items-center gap-2 sm:gap-3">
-        <Link href="/login" className="rounded-xl border border-border bg-surface px-3 py-2 font-mono text-[11px] text-muted transition-colors hover:border-border-hover hover:text-foreground sm:px-3 sm:text-sm">
-          Login
-        </Link>
-        <Link href="/signup" className="btn-primary min-w-[88px] px-3 py-2 text-center font-mono text-[11px] sm:min-w-0 sm:text-xs">
-          Sign Up
-        </Link>
+      <div ref={containerRef} className="relative">
+        <div className="hidden items-center gap-2 md:flex md:gap-3">
+          <Link href="/login" className="rounded-xl border border-border bg-surface px-3 py-2 font-mono text-[11px] text-muted transition-colors hover:border-border-hover hover:text-foreground md:px-3 md:text-sm">
+            Login
+          </Link>
+          <Link href="/signup" className="btn-primary min-w-[88px] px-3 py-2 text-center font-mono text-[11px] md:min-w-0 md:text-xs">
+            Sign Up
+          </Link>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setOpen((value) => !value)}
+          className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-2.5 py-2 font-mono text-[11px] text-foreground transition-colors hover:border-border-hover md:hidden"
+        >
+          <span className="flex h-7 w-7 items-center justify-center rounded-full border border-accent/20 bg-accent/10 text-accent">
+            <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" />
+              <path d="M4 20a8 8 0 0 1 16 0" strokeLinecap="round" />
+            </svg>
+          </span>
+          Join
+          <svg className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {open ? (
+          <div className="absolute right-0 top-full z-50 mt-3 w-48 rounded-2xl border border-border bg-surface-raised p-2 shadow-2xl shadow-black/30 md:hidden">
+            <p className="px-3 pb-2 pt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">Account</p>
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="block rounded-xl px-3 py-2 font-mono text-xs text-foreground transition-colors hover:bg-background/50"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              onClick={() => setOpen(false)}
+              className="mt-1 block rounded-xl bg-gradient-to-r from-accent to-accent-dim px-3 py-2 text-center font-mono text-xs font-semibold text-background"
+            >
+              Sign Up
+            </Link>
+          </div>
+        ) : null}
       </div>
     );
   }
