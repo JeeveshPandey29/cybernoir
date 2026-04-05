@@ -48,10 +48,10 @@ export function AuthControls({ user }: AuthControlsProps) {
   if (!user) {
     return (
       <div className="flex items-center gap-2 sm:gap-3">
-        <Link href="/login" className="rounded-xl border border-border bg-surface px-3 py-2 font-mono text-[11px] text-muted transition-colors hover:border-border-hover hover:text-foreground sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm">
+        <Link href="/login" className="rounded-xl border border-border bg-surface px-3 py-2 font-mono text-[11px] text-muted transition-colors hover:border-border-hover hover:text-foreground sm:px-3 sm:text-sm">
           Login
         </Link>
-        <Link href="/signup" className="btn-primary px-3 py-2 font-mono text-[11px] sm:text-xs">
+        <Link href="/signup" className="btn-primary min-w-[88px] px-3 py-2 text-center font-mono text-[11px] sm:min-w-0 sm:text-xs">
           Sign Up
         </Link>
       </div>

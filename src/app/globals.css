@@ -451,6 +451,12 @@ body {
     border-radius: 1.1rem;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
   }
+
+  header .btn-primary,
+  header .btn-outline {
+    width: auto;
+    min-height: auto;
+  }
 }
 
 /* â”€â”€â”€ Avatar â”€â”€â”€ */

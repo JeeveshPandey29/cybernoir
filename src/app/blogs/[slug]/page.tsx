@@ -128,7 +128,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           </div>
         </article>
 
-        <aside className="order-first space-y-4 lg:order-none lg:sticky lg:top-24 lg:h-fit">
+        <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
           <ShareButtons title={blog.title} />
           <div className="rounded-xl border border-border bg-surface p-4 text-sm">
             <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted">Reader access</p>
