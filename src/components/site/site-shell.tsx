@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ToastViewport } from "@/components/site/toast-viewport";
+import { VisitorWelcome } from "@/components/site/visitor-welcome";
 
 export function SiteShell({
   header,
@@ -17,6 +18,7 @@ export function SiteShell({
   return (
     <>
       <ToastViewport />
+      <VisitorWelcome />
       {!hideChrome ? header : null}
       <div className="flex-1">{children}</div>
       {!hideChrome ? <SiteFooter /> : null}

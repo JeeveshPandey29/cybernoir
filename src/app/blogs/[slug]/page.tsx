@@ -59,8 +59,8 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
   const reactionState = user ? await getBlogReactionState(blog.id, user.id) : { liked: false, bookmarked: false };
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_300px]">
+    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-10">
         <article className="min-w-0">
           <Link href="/blogs" className="font-mono text-sm text-accent transition-colors hover:text-foreground">
             {"< Back to blogs"}
@@ -68,13 +68,13 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
 
           <div className="mt-6">
             {blog.coverImage ? (
-              <div className="relative mb-8 h-[320px] overflow-hidden rounded-3xl border border-border">
+              <div className="relative mb-6 h-[220px] overflow-hidden rounded-3xl border border-border sm:mb-8 sm:h-[320px]">
                 <Image src={blog.coverImage} alt={blog.title} fill unoptimized className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
               </div>
             ) : null}
-            <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground">{blog.title}</h1>
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-muted">{blog.excerpt}</p>
+            <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{blog.title}</h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-muted sm:text-lg sm:leading-8">{blog.excerpt}</p>
             <div className="mt-5 flex flex-wrap items-center gap-4 font-mono text-xs text-muted">
               <span><RelativeTime value={blog.publishedAt ?? blog.createdAt} /></span>
               <span>{blog.readingTimeMinutes} min read</span>
@@ -83,7 +83,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           </div>
 
           <div className="mt-10">
-            <div className="rounded-3xl border border-border bg-surface p-6 sm:p-8">
+            <div className="rounded-3xl border border-border bg-surface p-4 sm:p-8">
               <div className="prose prose-invert mdx-content max-w-none">{mdx.content}</div>
             </div>
           </div>
@@ -128,7 +128,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
           </div>
         </article>
 
-        <aside className="space-y-4 lg:sticky lg:top-24 lg:h-fit">
+        <aside className="order-first space-y-4 lg:order-none lg:sticky lg:top-24 lg:h-fit">
           <ShareButtons title={blog.title} />
           <div className="rounded-xl border border-border bg-surface p-4 text-sm">
             <p className="mb-2 font-mono text-xs uppercase tracking-wider text-muted">Reader access</p>
@@ -151,7 +151,9 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
               <p className="leading-6 text-muted">More related posts will appear as the library grows.</p>
             )}
           </div>
-          <TableOfContents items={toc} />
+          <div className="hidden lg:block">
+            <TableOfContents items={toc} />
+          </div>
         </aside>
       </div>
     </main>

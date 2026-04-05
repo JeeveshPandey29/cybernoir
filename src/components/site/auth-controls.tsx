@@ -47,11 +47,11 @@ export function AuthControls({ user }: AuthControlsProps) {
 
   if (!user) {
     return (
-      <div className="flex items-center gap-3">
-        <Link href="/login" className="font-mono text-sm text-muted transition-colors hover:text-foreground">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <Link href="/login" className="rounded-xl border border-border bg-surface px-3 py-2 font-mono text-[11px] text-muted transition-colors hover:border-border-hover hover:text-foreground sm:border-0 sm:bg-transparent sm:px-0 sm:py-0 sm:text-sm">
           Login
         </Link>
-        <Link href="/signup" className="btn-primary font-mono text-xs">
+        <Link href="/signup" className="btn-primary px-3 py-2 font-mono text-[11px] sm:text-xs">
           Sign Up
         </Link>
       </div>
@@ -63,7 +63,7 @@ export function AuthControls({ user }: AuthControlsProps) {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2 text-left transition-colors hover:border-border-hover"
+        className="flex items-center gap-2 rounded-xl border border-border bg-surface px-2.5 py-2 text-left transition-colors hover:border-border-hover sm:gap-3 sm:px-3"
       >
         <div className="relative flex h-9 w-9 items-center justify-center rounded-full border border-accent/25 bg-accent/10 font-mono text-sm text-accent">
           {user.username.charAt(0).toUpperCase()}
@@ -73,7 +73,7 @@ export function AuthControls({ user }: AuthControlsProps) {
             </span>
           ) : null}
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden min-w-0 sm:block">
           <p className="text-sm font-semibold text-foreground">{user.username}</p>
           <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">{user.role}</p>
         </div>
