@@ -1,7 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
 import { getPublishedBlogs } from "@/lib/db";
-import { RelativeTime } from "@/components/shared/relative-time";
+import { formatCalendarDate } from "@/lib/time";
 import { NewsletterSignup } from "@/components/site/newsletter-signup";
 
 export const metadata = {
@@ -87,7 +87,7 @@ export default async function BlogsPage({
                 <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted">{blog.excerpt}</p>
                 <div className="mt-6 flex flex-wrap items-center gap-4 font-mono text-xs text-muted">
                   <span>{blog.readingTimeMinutes} min read</span>
-                  <span><RelativeTime value={blog.publishedAt ?? blog.createdAt} /></span>
+                  <span>{formatCalendarDate(blog.publishedAt ?? blog.createdAt)}</span>
                   <span>{blog._count.comments} comments</span>
                   <span>{blog._count.likes} likes</span>
                   <span>{blog._count.bookmarks} bookmarks</span>

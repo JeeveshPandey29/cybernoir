@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
 import { getLatestPublishedBlogs } from "@/lib/db";
-import { RelativeTime } from "@/components/shared/relative-time";
+import { formatCalendarDate } from "@/lib/time";
 import { NewsletterSignup } from "@/components/site/newsletter-signup";
 
 export default async function HomePage() {
@@ -57,7 +57,7 @@ export default async function HomePage() {
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted">{blog.excerpt}</p>
                   <div className="mt-5 flex items-center justify-between font-mono text-xs text-muted">
                     <span>{blog.readingTimeMinutes} min read</span>
-                    <span><RelativeTime value={blog.publishedAt ?? blog.createdAt} /></span>
+                    <span>{formatCalendarDate(blog.publishedAt ?? blog.createdAt)}</span>
                   </div>
                 </Link>
               ))}

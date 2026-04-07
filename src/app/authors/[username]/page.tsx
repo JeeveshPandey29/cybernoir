@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAuthorProfileByUsername, getPublishedBlogs } from "@/lib/db";
-import { RelativeTime } from "@/components/shared/relative-time";
+import { formatCalendarDate } from "@/lib/time";
 
 export async function generateMetadata({ params }: { params: Promise<{ username: string }> }): Promise<Metadata> {
   const { username } = await params;
@@ -91,9 +91,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ usernam
                   <h3 className="mt-4 text-xl font-semibold text-foreground">{blog.title}</h3>
                   <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted">{blog.excerpt}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-4 font-mono text-xs text-muted">
-                    <span>
-                      <RelativeTime value={blog.publishedAt ?? blog.createdAt} />
-                    </span>
+                    <span>{formatCalendarDate(blog.publishedAt ?? blog.createdAt)}</span>
                     <span>{blog.readingTimeMinutes} min read</span>
                     <span>{blog._count.likes} likes</span>
                   </div>

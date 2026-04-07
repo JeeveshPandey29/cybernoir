@@ -6,10 +6,10 @@ import { compileBlogMdx } from "@/lib/mdx";
 import { extractTocFromSource } from "@/lib/blogs";
 import { getCurrentUser } from "@/lib/auth";
 import { getBlogReactionState, getRelatedPublishedBlogs, getPublishedBlogBySlug } from "@/lib/db";
+import { formatCalendarDate } from "@/lib/time";
 import { TableOfContents } from "@/components/blog/table-of-contents";
 import { BlogInteractions } from "@/components/blog/blog-interactions";
 import { ShareButtons } from "@/components/blog/share-buttons";
-import { RelativeTime } from "@/components/shared/relative-time";
 
 export const dynamic = "force-dynamic";
 
@@ -76,7 +76,7 @@ export default async function BlogSlugPage({ params }: { params: Promise<{ slug:
             <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{blog.title}</h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-muted sm:text-lg sm:leading-8">{blog.excerpt}</p>
             <div className="mt-5 flex flex-wrap items-center gap-4 font-mono text-xs text-muted">
-              <span><RelativeTime value={blog.publishedAt ?? blog.createdAt} /></span>
+              <span>{formatCalendarDate(blog.publishedAt ?? blog.createdAt)}</span>
               <span>{blog.readingTimeMinutes} min read</span>
               <span>{blog._count.comments} comments</span>
             </div>

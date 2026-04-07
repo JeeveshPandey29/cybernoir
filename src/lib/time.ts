@@ -21,3 +21,13 @@ export function formatRelativeTime(input: string | Date) {
 
   return rtf.format(Math.round(diffMs / 1000), "second");
 }
+
+export function formatCalendarDate(input: string | Date) {
+  const date = typeof input === "string" ? new Date(input) : input;
+
+  return new Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(date);
+}
