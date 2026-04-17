@@ -175,6 +175,32 @@ function isMissingSchemaFeature(error: { message?: string; code?: string } | nul
   );
 }
 
+function isNetworkFetchFailure(error: unknown) {
+  if (!error) {
+    return false;
+  }
+
+  if (error instanceof TypeError) {
+    const typeErrorMessage = error.message.toLowerCase();
+    if (typeErrorMessage.includes("fetch failed")) {
+      return true;
+    }
+  }
+
+  if (typeof error === "object" && "message" in error) {
+    const message = String(error.message ?? "").toLowerCase();
+    return (
+      message.includes("fetch failed") ||
+      message.includes("network") ||
+      message.includes("econnrefused") ||
+      message.includes("enotfound") ||
+      message.includes("timed out")
+    );
+  }
+
+  return false;
+}
+
 async function notifyUsersOfPublishedBlog(blog: Pick<BlogRow, "title" | "slug">) {
   const supabase = createSupabaseAdminClient();
   const usersResult = await supabase.from("users").select("id");
@@ -233,7 +259,7 @@ async function syncScheduledBlogs() {
     .lte("scheduled_for", now);
 
   if (dueResult.error) {
-    if (isMissingSchemaFeature(dueResult.error)) {
+    if (isMissingSchemaFeature(dueResult.error) || isNetworkFetchFailure(dueResult.error)) {
       return;
     }
     throw new Error(`Failed to sync scheduled blogs: ${dueResult.error.message}`);
@@ -422,7 +448,7 @@ async function fetchBlogMetricsRows(blogId?: string) {
   const result = await query;
 
   if (result.error) {
-    if (isMissingSchemaFeature(result.error)) {
+    if (isMissingSchemaFeature(result.error) || isNetworkFetchFailure(result.error)) {
       return [] as CountRow[];
     }
     throw new Error("Failed to load blog metrics.");
@@ -651,6 +677,10 @@ export async function getUserByEmail(email: string) {
     .select("*")
     .eq("email", email)
     .maybeSingle<UserRow>();
+
+  if (result.error && isNetworkFetchFailure(result.error)) {
+    return null;
+  }
 
   const user = unwrapSingle(result.data, result.error);
   return user ? toUser(user) : null;
@@ -983,16 +1013,35 @@ export async function getBlogsWithCounts() {
 }
 
 export async function getPublishedBlogs() {
-  await syncScheduledBlogs();
+  try {
+    await syncScheduledBlogs();
+  } catch (error) {
+    console.error("Failed to sync scheduled blogs:", error);
+  }
+
   const supabase = createSupabaseAdminClient();
   const author = await getDefaultAuthor();
 
-  const [blogsResult, countsResult] = await Promise.all([
-    supabase.from("blogs").select("*").order("created_at", { ascending: false }),
-    fetchBlogMetricsRows(),
-  ]);
+  let blogsResult: { data: BlogRow[] | null; error: { message?: string } | null };
+  let countsResult: CountRow[];
+  try {
+    [blogsResult, countsResult] = await Promise.all([
+      supabase.from("blogs").select("*").order("created_at", { ascending: false }),
+      fetchBlogMetricsRows(),
+    ]);
+  } catch (error) {
+    if (isNetworkFetchFailure(error)) {
+      console.error("Supabase fetch failed while loading published blogs:", error);
+      return [];
+    }
+    throw error;
+  }
 
   if (blogsResult.error) {
+    if (isNetworkFetchFailure(blogsResult.error)) {
+      console.error("Supabase fetch failed while loading published blogs:", blogsResult.error);
+      return [];
+    }
     throw new Error("Failed to load published blogs.");
   }
 
@@ -1008,7 +1057,11 @@ export async function getPublishedBlogs() {
 }
 
 export async function getPublishedBlogBySlug(slug: string, currentUserId?: string) {
-  await syncScheduledBlogs();
+  try {
+    await syncScheduledBlogs();
+  } catch (error) {
+    console.error("Failed to sync scheduled blogs:", error);
+  }
   const supabase = createSupabaseAdminClient();
   const author = await getDefaultAuthor();
 

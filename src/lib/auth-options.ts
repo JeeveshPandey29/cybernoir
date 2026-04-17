@@ -138,13 +138,18 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (token.email) {
-        const dbUser = await getUserByEmail(token.email);
+        try {
+          const dbUser = await getUserByEmail(token.email);
 
-        if (dbUser) {
-          token.id = dbUser.id;
-          token.role = dbUser.role;
-          token.username = dbUser.username;
-          token.avatar = dbUser.avatar;
+          if (dbUser) {
+            token.id = dbUser.id;
+            token.role = dbUser.role;
+            token.username = dbUser.username;
+            token.avatar = dbUser.avatar;
+          }
+        } catch (error) {
+          // Keep previous token claims when user lookup fails (e.g. transient fetch outage).
+          console.error("Failed to refresh JWT claims from database:", error);
         }
       }
 
